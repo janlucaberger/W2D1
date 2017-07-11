@@ -53,14 +53,14 @@ P2_PIECES = {
     [7,4]
   ],
   Pawn: [
-    [7, 0],
-    [7, 1],
-    [7, 2],
-    [7, 3],
-    [7, 4],
-    [7, 5],
-    [7, 6],
-    [7, 7]
+    [6, 0],
+    [6, 1],
+    [6, 2],
+    [6, 3],
+    [6, 4],
+    [6, 5],
+    [6, 6],
+    [6, 7]
   ]
 }
 
@@ -73,20 +73,20 @@ class Board
   attr_accessor :board
 
   def initialize
-    @board = Array.new(8) {Array.new(8)}
+    @board = Array.new(8) {Array.new(8) { NullPiece.instance }}
   end
 
   def populate_board
-    (0..@board.length - 1).each do |i|
-      (0..@board.length - 1).each do |j|
-        case i
-        when 0, 1, 6, 7
-          @board[i][j] = Piece.new('X', [i, j])
-        else
-          @board[i][j] = NullPiece.new('_', [i, j])
-        end
-      end
-    end
+    # (0..@board.length - 1).each do |i|
+    #   (0..@board.length - 1).each do |j|
+    #     case i
+    #     when 0, 1, 6, 7
+    #       @board[i][j] = Piece.new('X', [i, j])
+    #     else
+    #       @board[i][j] = NullPiece.new('_', [i, j])
+    #     end
+    #   end
+    # end
   end
 
   def parse_pieces
@@ -94,13 +94,12 @@ class Board
    ALL_PIECES.each do |player_pieces|
      player_pieces.each do |piece, all_pos|
        all_pos.each do |position|
-         @grid[position[0]][position[1]] = generate_piece(piece, player_val, position)
+         @board[position[0]][position[1]] = generate_piece(piece, player_val, position)
        end
      end
      player_val += 1
    end
  end
-
 
  def generate_piece(sym, player, position)
    case sym
@@ -124,7 +123,7 @@ class Board
      Pawn.new(player, position)
    end
  end
- 
+
 
   def move_piece(start_pos, end_pos)
     raise ArgumentError.new("There is no piece at #{start_pos}") if self[start_pos].is_a?(NullPiece)
