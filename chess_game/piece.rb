@@ -1,38 +1,64 @@
-require 'byebug'
-
-module SlidingPiece
-  def moves(sym)
-    case sym
-    when horizontal
-    when vertical
-    when both
-    end
-  end
-end
-
+# require 'byebug'
+require 'singleton'
+require_relative "pieces/king"
 
 
 class Piece
 
   attr_accessor :value
 
-  def initialize(value, current_pos)
-    debugger
+  def initialize(player, current_pos)
     @current_pos = current_pos
-    @value = value
-  end
-
-  def moves
-
+    @player = player
   end
 
 end
 
 
 class NullPiece < Piece
-  # 
-  # def initialize(value, current_pos)
-  #   super(value, current_pos)
-  # end
+  include Singleton
 
+  def initialize#(value, current_pos)
+    super(nil, nil)
+    @value = "_"
+  end
+
+end
+
+
+
+class Queen < Piece
+  def initialize(player, current_pos)
+    super
+    @value = (player == 1 ? "\u2655" : "\u265B"  )
+  end
+end
+
+class Bishop < Piece
+  def initialize(player, current_pos)
+    super
+    @value = (player == 1 ? "\u2657" : "\u265D"  )
+  end
+end
+
+class Rook < Piece
+  include SlidingPiece
+  def initialize(player, current_pos)
+    super
+    @value = (player == 1 ? "\u2656" : "\u265C"  )
+  end
+end
+
+class Pawn < Piece
+  def initialize(player, current_pos)
+    super
+    @value = (player == 1 ? "\u2659" : "\u265F"  )
+  end
+end
+
+class Knight < Piece
+  def initialize(player, current_pos)
+    super
+    @value = (player == 1 ? "\u2658" : "\u265E"  )
+  end
 end
