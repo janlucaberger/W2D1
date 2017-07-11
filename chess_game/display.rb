@@ -35,10 +35,11 @@ end
 
 if __FILE__ == $PROGRAM_NAME
 
-  load 'display.rb'
 
   brd = Board.new
-  brd.populate_board
-  dsp = Display.new(brd, [0,0])
-  dis.test_render
+  brd.parse_pieces
+  # dsp = Display.new(brd, [0,0])
+  # dsp.test_render
+  # brd.board[0][0].moves
+  brd.board
 end
