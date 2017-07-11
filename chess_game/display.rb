@@ -14,7 +14,10 @@ class Display
     loop do
       system("clear")
       render
-      @cursor.get_input
+      # puts @cursor.cursor_pos
+      val = @cursor.get_input
+      puts val.class
+      # puts @cursor.get_input
     end
   end
 
@@ -34,12 +37,10 @@ class Display
 end
 
 if __FILE__ == $PROGRAM_NAME
-
-
   brd = Board.new
   brd.parse_pieces
-  # dsp = Display.new(brd, [0,0])
-  # dsp.test_render
+  dsp = Display.new(brd, [0,0])
+  dsp.test_render
   # brd.board[0][0].moves
-  brd.board
+  # brd.board
 end

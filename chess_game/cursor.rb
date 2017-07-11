@@ -44,9 +44,6 @@ class Cursor
     handle_key(key)
   end
 
-  def move(pos)
-    update_pos(pos)
-  end
   private
 
   def read_char
@@ -81,7 +78,7 @@ class Cursor
   def handle_key(key)
     case key
     when :return, :space
-      @current_pos
+      cursor_pos
     when :left
       update_pos(:left)
     when :right
@@ -97,9 +94,11 @@ class Cursor
 
   def update_pos(diff)
     new_pos = []
-    @cursor_pos.each_with_index { |el, i| new_pos << el + MOVES[diff][i] }
-    if @board.in_bounds?(new_pos)
+    cursor_pos.each_with_index { |el, i| new_pos << el + MOVES[diff][i] }
+    if board.in_bounds?(new_pos)
       @cursor_pos = new_pos
     end
+    nil
   end
+
 end
